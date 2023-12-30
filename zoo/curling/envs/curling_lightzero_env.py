@@ -14,7 +14,6 @@ from easydict import EasyDict
 
 from zoo.classic_control.cartpole.envs.cartpole_lightzero_env import CartPoleEnv
 
-
 @ENV_REGISTRY.register('pendulum_lightzero')
 class PendulumEnv(CartPoleEnv):
     """
@@ -26,45 +25,41 @@ class PendulumEnv(CartPoleEnv):
 
     @classmethod
     def default_config(cls: type) -> EasyDict:
+        """
+        Overview:
+            Get the default configuration of the BipedalWalker environment.
+        Returns:
+            - cfg (:obj:`EasyDict`): Default configuration dictionary.
+        """
         cfg = EasyDict(copy.deepcopy(cls.config))
         cfg.cfg_type = cls.__name__ + 'Dict'
         return cfg
 
     config = dict(
-        # (bool) Whether to use continuous action space
-        continuous=True,
-        # replay_path (str or None): The path to save the replay video. If None, the replay will not be saved.
-        # Only effective when env_manager.type is 'base'.
+        # (str) The gym environment name.
+        env_name="Curling",
         replay_path=None,
-        # (bool) Whether to scale action into [-2, 2]
-        act_scale=True,
+        continuous=True,
     )
 
     def __init__(self, cfg: dict) -> None:
         """
-        Initialize the environment with a configuration dictionary. Sets up spaces for observations, actions, and rewards.
+        Overview:
+            Initialize the BipedalWalker environment with the given config dictionary.
+        Arguments:
+            - cfg (:obj:`dict`): Configuration dictionary.
         """
         self._cfg = cfg
-        self._act_scale = cfg.act_scale
-        try:
-            self._env = gym.make('Pendulum-v1', render_mode="rgb_array")
-        except:
-            self._env = gym.make('Pendulum-v0', render_mode="rgb_array")
         self._init_flag = False
-        self._replay_path = cfg.replay_path
-        self._continuous = cfg.get("continuous", True)
-        self._observation_space = gym.spaces.Box(
-            low=np.array([-1.0, -1.0, -8.0]), high=np.array([1.0, 1.0, 8.0]), shape=(3,), dtype=np.float32
-        )
-        if self._continuous:
-            self._action_space = gym.spaces.Box(low=-2.0, high=2.0, shape=(1,), dtype=np.float32)
-        else:
-            self.discrete_action_num = 11
-            self._action_space = gym.spaces.Discrete(self.discrete_action_num)
+        self._continuous = True
+        self.prob_random_agent = cfg.prob_random_agent
+        self._observation_space = gym.spaces.Box(low=0,high=1,shape=(5,96,96),dtype=np.float32)
+        self._action_space = gym.spaces.Box(low=-1,high=1,shape=(3,),dtype=np.float32)
         self._action_space.seed(0)  # default seed
-        self._reward_space = gym.spaces.Box(
-            low=-1 * (3.14 * 3.14 + 0.1 * 8 * 8 + 0.001 * 2 * 2), high=0.0, shape=(1,), dtype=np.float32
-        )
+        self._reward_space = gym.spaces.Box(low=0.0, high=1.0, shape=(1,), dtype=np.float32)
+        self.players = [1, 2]
+        self._current_player = 0
+        self.battle_mode = cfg.battle_mode
 
     def reset(self) -> Dict[str, np.ndarray]:
         """
