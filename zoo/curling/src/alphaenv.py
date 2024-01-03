@@ -67,7 +67,7 @@ class MyEnv(gym.Env):
         info = {}
         info["shot"] = next_state["shot"]
         info["hammer"] = next_state["hammer"]
-        return maps, reward, done, Flase, info
+        return maps, reward, done, False, info
     
     def step(self, action, is_shot = False):
         x = action[0]*0.3

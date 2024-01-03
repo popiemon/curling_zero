@@ -1,7 +1,7 @@
 #! Python3
 
-from typing import Any
 import numpy as np
+import numpy.typing as npt
 import pandas as pd
 
 class Rvalue_team0:

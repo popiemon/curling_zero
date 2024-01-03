@@ -33,7 +33,7 @@ def stones(update: dict) -> pd.DataFrame:
     return df
     
 def stones_fast(update: dict) -> pd.DataFrame:
-    """盤面情報のdictから stones の datafmrae を作成
+    """盤面情報のdictから stones の dataframe を作成
 
     Args:
         update (dict): 盤面情報の state dict

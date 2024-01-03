@@ -13,7 +13,7 @@ from zoo.curling.src.util import calc_distance_and_neighbor_point
 class Brain:
     def __init__(self, cli: SocketClient) -> None:
         self.myteam = cli.get_my_team()
-        self.x_min = -4.75 /2
+        self.x_min = -4.75 / 2
         self.x_max = 4.75 / 2
         self.y_max = 40.234
         self.y_min = 0
@@ -139,7 +139,7 @@ class Brain:
         """
         xy_list = self.pred_position_allmode(v_x, v_y, rotation)
         min_distance = 1000
-        for xy0, xy1 in zip(xylist[:-1], xylist[1:]):
+        for xy0, xy1 in zip(xy_list[:-1], xy_list[1:]):
             xy0, xy1 = np.array(xy0), np.array(xy1)
             _pos = np.array((pos_x, pos_y))
             _, distance = calc_distance_and_neighbor_point(xy0, xy1, _pos)
@@ -161,7 +161,7 @@ class Brain:
         else:
             stones_pos = np.concatenate([my_stones_pos, your_stones_pos])
 
-        will_collisition_flag = False
+        will_collistion_flag = False
 
         for _pos in stones_pos:
             distance = self.calc_distance_from_orbit(
@@ -169,6 +169,6 @@ class Brain:
             )
 
             if distance < self.stone_size:
-                will_collisition_flag = True
+                will_collistion_flag = True
         
-        return will_collisition_flag
+        return will_collistion_flag

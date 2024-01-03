@@ -3,7 +3,7 @@
 import numpy as np
 import numpy.typing as npt
 import pandas as pd
-from typing import Any, Tuple
+from typing import Tuple
 from scipy.signal import windows
 import cv2
 
