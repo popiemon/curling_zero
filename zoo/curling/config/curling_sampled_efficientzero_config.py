@@ -35,7 +35,7 @@ curling_cont_sampled_efficientzero_config = dict(
         manager=dict(shared_memory=False, ),
     ),
     policy=dict(
-        simulation_env_name='curling',
+        simulation_env_name='Curling',
         simulation_env_config_type='sampled_self_play',
         model=dict(
             observation_shape=(5, 96, 96),

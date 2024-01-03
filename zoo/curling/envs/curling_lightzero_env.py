@@ -70,7 +70,7 @@ class CurlingcEnv(BaseEnv):
             self._env = MyEnv()
             self._init_flag = True
         obs, self.start_player_index = self._env.reset()
-        self._observation_space = self._env._observation_space
+        self._observation_space = self._env.observation_space
         self._eval_episode_return = 0
         obs = to_ndarray(obs)
         self._current_player = self.players[self.start_player_index]

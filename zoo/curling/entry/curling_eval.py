@@ -2,7 +2,7 @@
 import sys
 sys.path.append("/dc3/CurlingLightZero")
 
-from zoo.box2d.bipedalwalker.config.bipedalwalker_cont_sampled_efficientzero_config import main_config, create_config
+from zoo.curling.config.curling_sampled_efficientzero_config import main_config, create_config
 from lzero.entry import eval_muzero
 import numpy as np
 
