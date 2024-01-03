@@ -54,7 +54,7 @@ class CurlingcEnv(BaseEnv):
         self._continuous = True
         self.prob_random_agent = cfg.prob_random_agent
         self._observation_space = gym.spaces.Box(low=0,high=1,shape=(5,96,96),dtype=np.float32)
-        self._action_space = cfg.spaces.Box(low=-1,high=1,shape=(3,),dtype=np.float32)
+        self._action_space = gym.spaces.Box(low=-1,high=1,shape=(3,),dtype=np.float32)
         self._action_space.seed(0)  # default seed
         self._reward_space = gym.spaces.Box(low=0.0, high=1.0, shape=(1,), dtype=np.float32)
         self.players = [1, 2]
