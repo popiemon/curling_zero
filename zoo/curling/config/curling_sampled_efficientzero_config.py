@@ -1,3 +1,6 @@
+import sys
+sys.path.append("/dc3/CurlingLightZero")
+
 from easydict import EasyDict
 
 # ==============================================================
