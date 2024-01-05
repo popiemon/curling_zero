@@ -73,12 +73,6 @@ if __name__ == "__main__":
             # 試合が終了したらループを抜けます
             break
 
-        ### いろいろ追加 ###
-        for update in match_data.update_list:
-            update_dict = cli.convert_update(update, remove_trajectory)
-        print(update_dict["state"]["stones"])
-        ####################
-
         # 次のチームが自分のチームかどうかを確認します
         next_team = cli.get_next_team()
 
@@ -97,14 +91,6 @@ if __name__ == "__main__":
         else:
             # 次のチームが自分のチームでなければ、何もしません
             continue
-
-        ### いろいろ追加 ###
-        cli.update()
-        match_data = cli.get_match_data()
-        for update in match_data.update_list:
-            update_dict = cli.convert_update(update, remove_trajectory)
-        print(update_dict["state"]["stones"])
-        ####################
 
     # 試合が終了したら、clientから試合データを取得します
     move_info = cli.get_move_info()
