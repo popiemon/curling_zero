@@ -3,7 +3,7 @@ import pickle
 import yaml
 import copy
 from zoo.curling.src.dcsimulate import Simulate
-from zoo.curling.src.rvalue import Rvalue_fast, Rvalue_team0
+from zoo.curling.src.rvalue import Rvalue_fast, Rvalue_team0, Rvalue_end
 from zoo.curling.src.data_df import stones_fast
 import numpy as np
 from zoo.curling.src.map_array import Stone_map_gaussian
@@ -34,7 +34,8 @@ class MyEnv(gym.Env):
         self.game_state = copy.deepcopy(self.init_game_state)
 
         self.simulate = Simulate(port=port)
-        self.reward = Rvalue_team0()
+        #self.reward = Rvalue_team0()
+        self.reward = Rvalue_end()
     
     def enemy_turn_get_obs(self):
         state = self.simulate.get_state()
@@ -51,8 +52,8 @@ class MyEnv(gym.Env):
     
     def state_to_obs(self, next_state):
         stone_array = stones_fast(next_state)
-        if next_state["shot"] == self.shot_end and next_state["end"] > 0:
-            reward = self.reward(next_state)
+        if next_state["shot"] == 0 and next_state["end"] > 0:
+            reward = self.reward(next_state, self.game_state)
         else:
             reward = 0
         # チャンネルの意味: 後攻の石|先攻の石|ハウスのガウス|ショット|手番|
