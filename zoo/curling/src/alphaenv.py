@@ -32,7 +32,7 @@ class MyEnv(gym.Env):
             port = 10001
         self.initial_map = self.stone2map(None)
         self.game_state = copy.deepcopy(self.init_game_state)
-
+        self.port = port
         self.simulate = Simulate(port=port)
         #self.reward = Rvalue_team0()
         self.reward = Rvalue_end()
@@ -55,7 +55,10 @@ class MyEnv(gym.Env):
         if next_state["shot"] == 0 and next_state["end"] > 0:
             reward = self.reward(next_state, self.game_state)
         else:
-            reward = 0
+            if next_state["stones"] == self.game_state["stones"]:  # 盤面に変化が無いとき
+                reward = -1
+            else:
+                reward = 0
         # チャンネルの意味: 後攻の石|先攻の石|ハウスのガウス|ショット|手番|
         maps = self.stone2map(stone_array, next_state["hammer"] == "team1", next_state["shot"])
 
