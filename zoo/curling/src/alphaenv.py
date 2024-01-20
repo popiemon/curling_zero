@@ -56,7 +56,7 @@ class MyEnv(gym.Env):
             reward = self.reward(next_state, self.game_state)
         else:
             if next_state["stones"] == self.game_state["stones"]:  # 盤面に変化が無いとき
-                reward = -1
+                reward = -5
             else:
                 reward = 0
         # チャンネルの意味: 後攻の石|先攻の石|ハウスのガウス|ショット|手番|

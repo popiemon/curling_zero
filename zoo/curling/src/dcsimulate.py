@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from copy import deepcopy
 from typing import Optional, Any
 import time
+import gc
 
 @dataclass
 class ShotParam:
@@ -18,14 +19,12 @@ class Simulate:
         super(Simulate, self).__init__
         cpp_command = [f"/workspace/DigitalCurling3-ClientExamples/build/stdio/digitalcurling3_client_examples__stdio", "localhost", str(port)]
         self.process = subprocess.Popen(cpp_command, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-
         self.first_flag = True
 
         output = self.process.stdout.readline()
         if output.decode().strip().startswith("inputwait"):
             self.first_flag = True
             game_state = json.loads(output.decode().strip().split()[1])
-    
     
     def shot(self, shot_param: ShotParam, preview: bool, process) -> Optional[dict[str, Any]]:
         if preview is False:
