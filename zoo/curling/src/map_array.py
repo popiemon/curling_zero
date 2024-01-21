@@ -78,3 +78,33 @@ class Stone_map_gaussian:
         map[:,:,3] = shot/15
 
         return map
+    
+    def mch_map(self, in_map: npt.NDArray[np.float32]|None, hammer = 0, shot = 0) -> np.array:
+        """__call__関数がorg。アレンジしたver
+
+        Args:
+            in_map (npt.NDArray[np.float32] | None): _description_
+            hammer (int, optional): _description_. Defaults to 0.
+            shot (int, optional): _description_. Defaults to 0.
+
+        Returns:
+            np.array: _description_
+        """
+        map = np.zeros((self.map_size[1], self.map_size[0], 5), dtype=np.float32)
+        my_team = (hammer) ^ ((shot+1) % 2)  # 0 or 1
+        map[:,:,2] = self.center_array
+        map[:,:,4] = my_team  # 0 or 1
+
+        if in_map is None:
+            return map
+        mystonemap = in_map[in_map[:,0] == my_team] 
+        enstonemap = in_map[in_map[:,0] != my_team]
+
+        if len(mystonemap)>0:
+            map[:,:,0] = self.update_map(mystonemap)
+        if len(enstonemap)>0:
+            map[:,:,1] = self.update_map(enstonemap)
+        map[:,:,3] = shot/15
+
+        return map
+        

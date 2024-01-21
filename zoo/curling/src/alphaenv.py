@@ -56,11 +56,12 @@ class MyEnv(gym.Env):
             reward = self.reward(next_state, self.game_state)
         else:
             if next_state["stones"] == self.game_state["stones"]:  # 盤面に変化が無いとき
-                reward = -5
+                reward = -1
             else:
                 reward = 0
-        # チャンネルの意味: 後攻の石|先攻の石|ハウスのガウス|ショット|手番|
-        maps = self.stone2map(stone_array, next_state["hammer"] == "team1", next_state["shot"])
+        # チャンネルの意味: org:後攻の石|先攻の石|ハウスのガウス|ショット|手番|. new:敵の石|自分の石|ハウスのガウス|ショット|手番|.
+        # maps = self.stone2map(stone_array, next_state["hammer"] == "team1", next_state["shot"])  # org
+        maps = self.stone2map.mch_map(stone_array, next_state["hammer"] == "team1", next_state["shot"])  # new
 
         # 本来の使い方ではないが、ゲームが終了したか確認する。
         done = False
