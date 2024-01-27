@@ -27,7 +27,7 @@ if __name__ == "__main__":
         The eval_muzero function is used here for evaluation. For more details about this function and its parameters, 
         please refer to its own documentation.
     """
-    model_path = '/dc3/CurlingLightZero/data_sez_ctree/curling_cont_sampled_efficientzero_k100_ns200_upcNone-mur0.25_rr0.0_seed0_240105_090508/ckpt/iteration_80000.pth.tar'
+    model_path = "/dc3/CurlingLightZero/data_sez_ctree/curling_cont_sampled_efficientzero_k100_ns200_upcNone-mur0.25_rr0.0_seed0_240126_130919/ckpt/iteration_50000.pth.tar"
     # model_path = None
 
     # Initialize a list with a single seed for the experiment

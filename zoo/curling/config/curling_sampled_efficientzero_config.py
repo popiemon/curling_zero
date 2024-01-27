@@ -109,4 +109,4 @@ if __name__ == "__main__":
         """
         from lzero.entry import train_muzero_with_gym_env as train_muzero
 
-    train_muzero([main_config, create_config], seed=0, max_env_step=max_env_step)
+    train_muzero([main_config, create_config], seed=0, max_env_step=max_env_step, model_path="/dc3/CurlingLightZero/data_sez_ctree/curling_cont_sampled_efficientzero_k100_ns200_upcNone-mur0.25_rr0.0_seed0_240124_112018/ckpt/iteration_70000.pth.tar")
