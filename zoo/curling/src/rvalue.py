@@ -61,10 +61,10 @@ class Rvalue_end:
         if lose_point is None:
             lose_point = 0
         value = win_point - lose_point
-        if win_team == your_team:
+        if win_team == your_team:  # 勝った時
             pass
-        else:
-            value *= -1
+        else:  # 負けた時
+            value = 0
         return value*5
 
         
