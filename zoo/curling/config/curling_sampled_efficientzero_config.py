@@ -65,7 +65,7 @@ curling_cont_sampled_efficientzero_config = dict(
         num_simulations=num_simulations,
         reanalyze_ratio=reanalyze_ratio,
         n_episode=n_episode,
-        eval_freq=int(2e3),
+        eval_freq=int(2e6),
         model_update_ratio=model_update_ratio,
         replay_buffer_size=int(1e6),  # the size/capacity of replay_buffer, in the terms of transitions.
         collector_env_num=collector_env_num,
@@ -109,4 +109,4 @@ if __name__ == "__main__":
         """
         from lzero.entry import train_muzero_with_gym_env as train_muzero
 
-    train_muzero([main_config, create_config], seed=0, max_env_step=max_env_step)
+    train_muzero([main_config, create_config], seed=0, max_env_step=max_env_step, model_path="/dc3/CurlingLightZero/data_sez_ctree/curling_cont_sampled_efficientzero_k100_ns200_upcNone-mur0.25_rr0.0_seed0_240126_130919/ckpt/iteration_50000.pth.tar")
