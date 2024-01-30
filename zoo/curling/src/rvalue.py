@@ -67,5 +67,56 @@ class Rvalue_end:
             value = 0
         return value*5
 
-        
+class Rvalue_stones:
+    def __init__(self):
+        self.center_x = 0  # house center
+        self.center_y = 38.405  # house center
+        self.max_reward = 10
+    
+    def __call__(self, next_state, state):
+        # my team を算出
+        if state["shot"] % 2 != 0:  # 奇数
+            my_team = state["hammer"]
+            if my_team == "team0":
+                en_team = "team1"
+            else:
+                en_team = "team0"
+        else:  # 偶数
+            if state["hammer"] == "team0":
+                my_team = "team1"
+                en_team = "team0"
+            else:
+                my_team = "team0"
+                en_team = "team1"
+        my_stones = state["stones"][my_team]
+        en_stones = state["stones"][en_team]
 
+        my_next_stones = next_state["stones"][my_team]
+        en_next_stones = next_state["stones"][en_team]
+
+        for stone in my_stones:
+            dists = []
+            if stone is not None:
+                stone_x = stone["position"]["x"]
+                stone_y = stone["position"]["y"]
+                dist = np.sqrt((self.center_x - stone_x)**2 + (self.center_y - stone_y)**2)
+                dists.append(dist)
+
+        for stone in my_next_stones:
+            next_dists = []
+            if stone is not None:
+                stone_x = stone["position"]["x"]
+                stone_y = stone["position"]["y"]
+                dist = np.sqrt((self.center_x - stone_x)**2 + (self.center_y - stone_y)**2)
+                next_dists.append(dist)
+        
+        if (len(dists) == 0) and (len(next_dists) == 0):
+            reward = 0
+        elif (len(dists) == 0) and (len(next_dists) != 0):
+            reward = self.max_reward - min(next_dists)
+        elif (len(dists) != 0) and (len(next_dists) == 0):
+            reward = 0
+        else:
+            reward = self.max_reward - min(next_dists)
+
+        return reward 

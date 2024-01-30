@@ -3,7 +3,7 @@ import pickle
 import yaml
 import copy
 from zoo.curling.src.dcsimulate import Simulate
-from zoo.curling.src.rvalue import Rvalue_fast, Rvalue_team0, Rvalue_end
+from zoo.curling.src.rvalue import Rvalue_fast, Rvalue_team0, Rvalue_end, Rvalue_stones
 from zoo.curling.src.data_df import stones_fast
 import numpy as np
 from zoo.curling.src.map_array import Stone_map_gaussian
@@ -36,6 +36,7 @@ class MyEnv(gym.Env):
         self.simulate = Simulate(port=port)
         #self.reward = Rvalue_team0()
         self.reward = Rvalue_end()
+        self.shotreward = Rvalue_stones()
     
     def enemy_turn_get_obs(self):
         state = self.simulate.get_state()
@@ -59,6 +60,7 @@ class MyEnv(gym.Env):
                 reward = -1
             else:
                 reward = 1  # 盤面が変化した時
+                reward = self.shotreward(next_state, self.game_state)
         # チャンネルの意味: org:後攻の石|先攻の石|ハウスのガウス|ショット|手番|. new:敵の石|自分の石|ハウスのガウス|ショット|手番|.
         # maps = self.stone2map(stone_array, next_state["hammer"] == "team1", next_state["shot"])  # org
         maps = self.stone2map.mch_map(stone_array, next_state["hammer"] == "team1", next_state["shot"])  # new
